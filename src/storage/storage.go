@@ -43,6 +43,7 @@ type MySQL struct {
 	Parameters string
 }
 
+// 这块可以抽出接口来
 func (a MySQL) DSN() string {
 	return fmt.Sprintf("%s:%s@tcp(%s)/%s?%s",
 		a.User, a.Password, a.Address, a.DBName, a.Parameters)

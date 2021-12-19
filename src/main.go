@@ -14,6 +14,7 @@ import (
 // VERSION go build -ldflags "-X main.VERSION=x.x.x"
 var VERSION = "not specified"
 
+// 和kratos的风格好像
 func main() {
 	app := cli.NewApp()
 	app.Name = "n9e"
