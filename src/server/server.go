@@ -58,12 +58,13 @@ func Run(opts ...ServerOption) {
 		opt(&server)
 	}
 
+	// 处理方式 太优雅了！！
 	cleanFunc, err := server.initialize()
 	if err != nil {
 		fmt.Println("server init fail:", err)
 		os.Exit(code)
 	}
-
+	// 第一次见GOTO形式的处理！
 EXIT:
 	for {
 		sig := <-sc
@@ -130,10 +131,10 @@ func (s Server) initialize() (func(), error) {
 		return fns.Ret(), err
 	}
 
-	// sync rules/users/mutes/targets to memory cache
+	// 定时同步rules/users/mutes/targets到内存缓存中
 	memsto.Sync()
 
-	// start heartbeat
+	// 统一处理心跳，如果一段时间没有发送则进行清除
 	if err = naming.Heartbeat(ctx); err != nil {
 		return fns.Ret(), err
 	}
@@ -150,7 +151,7 @@ func (s Server) initialize() (func(), error) {
 	httpClean := httpx.Init(config.C.HTTP, r)
 	fns.Add(httpClean)
 
-	// register ident and nodata logic
+	// 注册ident和nodata逻辑
 	idents.Handle(ctx)
 
 	// release all the resources

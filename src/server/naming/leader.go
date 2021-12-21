@@ -8,6 +8,7 @@ import (
 	"github.com/toolkits/pkg/logger"
 )
 
+// IamLeader 取第一个作为leader
 func IamLeader() (bool, error) {
 	servers, err := ActiveServers(context.Background(), config.C.ClusterName)
 	if err != nil {
